@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Archivos de build
+dist/
+
+# Variables de entorno locales
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Capacitor - Archivos generados
+android/
+ios/
+
+# Caché
+.cache/
