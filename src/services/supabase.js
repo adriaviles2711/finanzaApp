@@ -79,10 +79,15 @@ export const authService = {
      * @returns {Promise<{data, error}>}
      */
     async loginConProveedor(provider) {
+        // En GitHub Pages, la URL puede ser https://usuario.github.io/repo/
+        // window.location.origin solo devuelve https://usuario.github.io
+        // Necesitamos window.location.pathname para incluir /repo/
+        const redirectUrl = window.location.origin + window.location.pathname
+        
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider,
             options: {
-                redirectTo: window.location.origin
+                redirectTo: redirectUrl
             }
         })
         return { data, error }
