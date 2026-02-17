@@ -11,7 +11,7 @@
 
 import { authService } from '../services/supabase.js'
 import { t, getCurrentLang, setLang, getSupportedLangs } from '../utils/i18n.js'
-import { getNavItems, AVAILABLE_NAV_ITEMS } from '../utils/preferences.js'
+
 
 // Flag para evitar inicialización múltiple de eventos
 let layoutEventsInitialized = false
@@ -29,7 +29,7 @@ export function renderLayout() {
 
   const currentLang = getCurrentLang()
   const langs = getSupportedLangs()
-  const userNavItems = getNavItems()
+
 
   return `
     <!-- Layout Principal -->
@@ -209,8 +209,25 @@ export function renderLayout() {
           
           <!-- Grupo Izquierdo -->
           <div class="flex items-center justify-between flex-1 gap-1 pr-6">
-            ${renderMobileNavItem(userNavItems[0])}
-            ${renderMobileNavItem(userNavItems[1])}
+            <!-- Dashboard -->
+            <a href="#/dashboard" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="dashboard">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.dashboardShort')}</span>
+            </a>
+            
+            <!-- Transacciones -->
+            <a href="#/transacciones" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="transacciones">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.transactionsShort')}</span>
+            </a>
           </div>
 
           <!-- Espaciador Central (para FAB) -->
@@ -218,7 +235,15 @@ export function renderLayout() {
 
           <!-- Grupo Derecho -->
           <div class="flex items-center justify-between flex-1 gap-1 pl-6">
-            ${renderMobileNavItem(userNavItems[2])}
+            <!-- Presupuestos -->
+            <a href="#/presupuestos" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="presupuestos">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.budgetsShort')}</span>
+            </a>
             
             <!-- More Menu Trigger -->
             <button id="btn-more-menu" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2">
@@ -240,59 +265,49 @@ export function renderLayout() {
       <!-- More Menu Drawer -->
       <div id="more-menu-drawer" class="fixed bottom-[80px] right-4 w-48 bg-white dark:bg-dark-800 rounded-2xl shadow-2xl border border-dark-100 dark:border-dark-700 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex flex-col overflow-hidden">
         
-        ${renderMoreMenuItems()}
+        <a href="#/metas" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="metas">
+          <div class="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.goals')}</span>
+        </a>
 
+        <a href="#/categorias" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="categorias">
+          <div class="p-1.5 rounded-lg bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.categories')}</span>
+        </a>
+
+        <a href="#/informes" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="informes">
+           <div class="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.reports')}</span>
+        </a>
+
+        <div class="h-px bg-dark-100 dark:bg-dark-700 my-1"></div>
+
+        <a href="#/perfil" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="perfil">
+          <div class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.profile')}</span>
+        </a>
       </div>
     </div>
   `
 }
 
-// Helper to render mobile nav item
-function renderMobileNavItem(itemId) {
-  if (!itemId) return ''
-  const itemConfig = AVAILABLE_NAV_ITEMS.find(i => i.id === itemId)
-  if (!itemConfig) return ''
 
-  return `
-    <a href="#/${itemId}" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="${itemId}">
-      <div class="nav-icon-container p-1 rounded-xl transition-colors">
-        <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${itemConfig.iconPath}" />
-        </svg>
-      </div>
-      <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t(`nav.${itemId}Short`) || t(`nav.${itemId}`)}</span>
-    </a>
-    `
-}
-
-// Helper to render items in the "More" drawer (excluding those already in bottom bar)
-function renderMoreMenuItems() {
-  const userNavItems = getNavItems()
-  // Items that are NOT in the bottom bar should be in the menu
-  const menuItems = AVAILABLE_NAV_ITEMS.filter(item => !userNavItems.includes(item.id))
-
-  return menuItems.map(item => `
-        <a href="#/${item.id}" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="${item.id}">
-          <div class="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${item.iconPath}" />
-            </svg>
-          </div>
-          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t(`nav.${item.id}`)}</span>
-        </a>
-    `).join('') + `
-        <div class="h-px bg-dark-100 dark:bg-dark-700 my-1"></div>
-        <a href="#/perfil" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="perfil">
-            <div class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            </div>
-            <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.profile')}</span>
-        </a>
-    `
-
-}
 
 /**
  * Actualizar el elemento de navegación activo
@@ -317,7 +332,7 @@ export function updateActiveNav(path) {
     item.classList.remove('nav-item-active')
   })
 
-  const activeDesktop = document.querySelector(`.sidebar [data-nav="${activeNav}"]`)
+  const activeDesktop = document.querySelector(`.sidebar[data - nav= "${activeNav}"]`)
   if (activeDesktop) {
     activeDesktop.classList.add('nav-item-active')
   }
@@ -335,12 +350,11 @@ export function updateActiveNav(path) {
   })
 
   // Check if it's a primary item (dashboard, transacciones, presupuestos)
-  const userNavItems = getNavItems()
-  const isPrimary = userNavItems.includes(activeNav)
+  const isPrimary = ['dashboard', 'transacciones', 'presupuestos'].includes(activeNav)
   let activeMobile
 
   if (isPrimary) {
-    activeMobile = document.querySelector(`.bottom-nav [data-nav="${activeNav}"]`)
+    activeMobile = document.querySelector(`.bottom - nav[data - nav="${activeNav}"]`)
   } else {
     // If it's a secondary item (metas, categorias, informes, perfil), highlight "More"
     activeMobile = document.getElementById('btn-more-menu')
@@ -484,24 +498,24 @@ function showLogoutModal() {
     
     <!-- Modal Content -->
     <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm bg-white dark:bg-dark-900 rounded-3xl p-8 shadow-2xl border border-dark-100 dark:border-dark-800 z-50 animate-scale-in">
-      
+
       <!-- Icon -->
       <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-danger-100 to-danger-50 dark:from-danger-900/40 dark:to-danger-900/20 rounded-3xl flex items-center justify-center">
         <svg class="w-10 h-10 text-danger-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
       </div>
-      
+
       <!-- Title -->
       <h3 class="text-xl font-bold text-dark-900 dark:text-white text-center mb-2">
         ${t('nav.logoutConfirm')}
       </h3>
-      
+
       <!-- Description -->
       <p class="text-dark-500 dark:text-dark-400 text-center mb-8">
         ${t('nav.logoutDesc')}
       </p>
-      
+
       <!-- Buttons -->
       <div class="flex gap-3">
         <button id="logout-cancel" class="flex-1 py-3.5 px-6 rounded-2xl font-semibold text-dark-600 dark:text-dark-300 bg-dark-100 dark:bg-dark-800 hover:bg-dark-200 dark:hover:bg-dark-700 transition-all duration-200">
@@ -547,15 +561,15 @@ function initConnectionStatus() {
     if (indicator) {
       if (navigator.onLine) {
         indicator.innerHTML = `
-          <span class="w-2 h-2 bg-success-500 rounded-full animate-pulse"></span>
-          <span>${t('common.online')}</span>
-        `
+      <span class="w-2 h-2 bg-success-500 rounded-full animate-pulse"></span>
+      <span>${t('common.online')}</span>
+  `
         indicator.className = 'hidden md:flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-success-100 dark:bg-success-900/30 text-success-700 dark:text-success-400'
       } else {
         indicator.innerHTML = `
-          <span class="w-2 h-2 bg-warning-500 rounded-full"></span>
-          <span>${t('common.offline')}</span>
-        `
+      <span class="w-2 h-2 bg-warning-500 rounded-full"></span>
+      <span>${t('common.offline')}</span>
+  `
         indicator.className = 'hidden md:flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-warning-100 dark:bg-warning-900/30 text-warning-700 dark:text-warning-400'
       }
     }

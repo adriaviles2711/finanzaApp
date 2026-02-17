@@ -11,7 +11,7 @@ import { dataManager } from '../services/dataManager.js'
 import { db } from '../services/dexie.js'
 import { obtenerIniciales, descargarArchivo } from '../utils/helpers.js'
 import { t } from '../utils/i18n.js'
-import { getNavItems, saveNavItems, AVAILABLE_NAV_ITEMS } from '../utils/preferences.js'
+
 
 /**
  * Renderizar vista de Perfil
@@ -172,29 +172,7 @@ export async function PerfilView() {
         </div>
       </div>
 
-      <!-- ===== PERSONALIZACIÓN DE NAVEGACIÓN ===== -->
-      <div class="card">
-        <div class="flex items-center gap-3 mb-5">
-           <div class="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center shadow-lg shadow-pink-500/20">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </div>
-          <h3 class="font-bold text-lg text-dark-900 dark:text-white">${t('profile.navCustomization') || 'Personalizar Menú'}</h3>
-        </div>
-        
-        <div class="space-y-4">
-           <p class="text-sm text-dark-500 dark:text-dark-400 mb-2">Selecciona los 3 accesos directos principales para la barra inferior (móvil).</p>
-           
-           <div class="grid gap-3">
-             ${renderNavSelectors()}
-           </div>
 
-           <button id="btn-save-nav" class="w-full py-3 px-4 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium shadow-lg shadow-primary-500/20 transition-all mt-2">
-             ${t('common.save') || 'Guardar cambios'}
-           </button>
-        </div>
-      </div>
 
       
       <!-- ===== DATOS Y SINCRONIZACIÓN ===== -->
@@ -469,25 +447,7 @@ export function initPerfilEvents() {
     showDeleteAccountModal()
   })
 
-  // Guardar navegación personalizada
-  document.getElementById('btn-save-nav')?.addEventListener('click', () => {
-    const newNav = [
-      document.getElementById('nav-select-0').value,
-      document.getElementById('nav-select-1').value,
-      document.getElementById('nav-select-2').value
-    ]
 
-    // Validar duplicados
-    const unique = new Set(newNav)
-    if (unique.size !== 3) {
-      window.showToast?.('No puedes seleccionar la misma opción dos veces', 'warning')
-      return
-    }
-
-    saveNavItems(newNav)
-    window.showToast?.('Menú actualizado', 'success')
-    setTimeout(() => window.location.reload(), 800)
-  })
 }
 
 /**
@@ -687,21 +647,6 @@ function showEditProfileModal() {
 }
 
 
-function renderNavSelectors() {
-  const currentNav = getNavItems()
 
-  return [0, 1, 2].map(index => `
-    <div class="flex items-center gap-2">
-      <span class="text-sm font-medium text-dark-500 w-6">${index + 1}</span>
-      <select id="nav-select-${index}" class="flex-1 py-2 px-3 bg-white dark:bg-dark-800 border border-dark-200 dark:border-dark-700 rounded-lg text-sm text-dark-900 dark:text-white focus:ring-2 focus:ring-primary-500">
-        ${AVAILABLE_NAV_ITEMS.map(item => `
-          <option value="${item.id}" ${currentNav[index] === item.id ? 'selected' : ''}>
-            ${t(`nav.${item.id}`) || item.id}
-          </option>
-        `).join('')}
-      </select>
-    </div>
-  `).join('')
-}
 
 export default PerfilView
