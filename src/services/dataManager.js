@@ -476,6 +476,251 @@ export const dataManager = {
     },
 
     // ===========================================================
+    // IMPORTACIÓN DE DATOS
+    // ===========================================================
+
+    /**
+     * Importar datos desde JSON (Copia de seguridad)
+     * @param {object} datos - Objeto con transacciones y categorías
+     * @returns {Promise<object>} Resumen de la importación
+     */
+    async importarDatosJson(datos) {
+        if (!userId) throw new Error('Usuario no autenticado')
+
+        let resumen = {
+            categorias: 0,
+            transacciones: 0,
+            errores: 0
+        }
+
+        // 1. Importar Categorías
+        if (datos.categorias && Array.isArray(datos.categorias)) {
+            const categoriasExistentes = await localDbService.obtenerCategorias(userId)
+            const mapCategorias = new Map()
+
+            // Crear mapa de categorías existentes para evitar duplicados por nombre
+            categoriasExistentes.forEach(c => {
+                mapCategorias.set(`${c.nombre.toLowerCase()}_${c.tipo}`, c.id)
+            })
+
+            for (const cat of datos.categorias) {
+                try {
+                    // Si viene del mismo usuario original, intentar mantener ID
+                    const key = `${(cat.nombre || '').toLowerCase()}_${cat.tipo}`
+
+                    if (!mapCategorias.has(key)) {
+                        // Crear nueva categoría si no existe
+                        const nuevaCat = {
+                            nombre: cat.nombre,
+                            tipo: cat.tipo,
+                            icono: cat.icono,
+                            color: cat.color,
+                            user_id: userId
+                        }
+                        const creada = await this.crearCategoria(nuevaCat)
+                        mapCategorias.set(key, creada.id)
+                        resumen.categorias++
+                    }
+                } catch (e) {
+                    console.error('Error importando categoría:', e)
+                    resumen.errores++
+                }
+            }
+        }
+
+        // 2. Importar Transacciones
+        if (datos.transacciones && Array.isArray(datos.transacciones)) {
+            // Obtener categorías actualizadas para mapear
+            const categoriasActuales = await localDbService.obtenerCategorias(userId)
+            const mapCategoriasIds = new Map() // Map ID original -> ID nuevo (por nombre)
+
+            // Reconstruir mapa por nombre para buscar coincidencias
+            categoriasActuales.forEach(c => {
+                mapCategoriasIds.set(`${c.nombre.toLowerCase()}_${c.tipo}`, c.id)
+            })
+
+            // Intentar mapear IDs antiguos si vienen en el JSON
+            const mapIdsAntiguos = new Map()
+            if (datos.categorias) {
+                datos.categorias.forEach(c => {
+                    if (c.id && c.nombre && c.tipo) {
+                        const nuevoId = mapCategoriasIds.get(`${c.nombre.toLowerCase()}_${c.tipo}`)
+                        if (nuevoId) {
+                            mapIdsAntiguos.set(c.id, nuevoId)
+                        }
+                    }
+                })
+            }
+
+            for (const tx of datos.transacciones) {
+                try {
+                    // Validar campos mínimos
+                    if (!tx.monto || !tx.fecha) continue
+
+                    // Buscar categoría correcta
+                    let categoryId = tx.category_id
+
+                    // Si el ID no existe en las categorías actuales, intentar buscar por nombre/tipo mapeado
+                    // O usar el mapa de IDs antiguos si está disponible
+                    if (mapIdsAntiguos.has(categoryId)) {
+                        categoryId = mapIdsAntiguos.get(categoryId)
+                    } else if (tx.category) {
+                        // Buscar por objeto categoría incrustado
+                        const key = `${(tx.category.nombre || '').toLowerCase()}_${tx.category.tipo || tx.tipo}`
+                        if (mapCategoriasIds.has(key)) {
+                            categoryId = mapCategoriasIds.get(key)
+                        }
+                    }
+
+                    // Si aún no tenemos categoría, asignar a "Otros" o similar, o crearla?
+                    // Por ahora, si no encuentra, se queda sin categoría (null) o el ID original que fallará al mostrar
+                    // Mejor intentar buscar una categoría "General" o "Otros" del mismo tipo
+                    if (!categoryId && tx.tipo) {
+                        // Fallback básico
+                        const generalKey = `otros_${tx.tipo}`
+                        // Buscar alguna categoría del mismo tipo si no hay "otros" especifica
+                        const catDelTipo = categoriasActuales.find(c => c.tipo === tx.tipo)
+                        if (catDelTipo) categoryId = catDelTipo.id
+                    }
+
+                    const nuevaTx = {
+                        monto: tx.monto,
+                        fecha: tx.fecha,
+                        descripcion: tx.descripcion,
+                        tipo: tx.tipo,
+                        category_id: categoryId,
+                        user_id: userId,
+                        archivo_url: tx.archivo_url || null,
+                        archivo_nombre: tx.archivo_nombre || null
+                    }
+
+                    await this.crearTransaccion(nuevaTx)
+                    resumen.transacciones++
+                } catch (e) {
+                    console.error('Error importando transacción:', e)
+                    resumen.errores++
+                }
+            }
+        }
+
+        return resumen
+    },
+
+    /**
+     * Importar transacciones desde CSV
+     * @param {string} csvText - Contenido del CSV
+     * @returns {Promise<object>} Resumen de la importación
+     */
+    async importarTransaccionesCSV(csvText) {
+        if (!userId) throw new Error('Usuario no autenticado')
+
+        let resumen = {
+            transacciones: 0,
+            errores: 0
+        }
+
+        const lines = csvText.split('\n')
+        if (lines.length < 2) return resumen // Solo cabecera o vacío
+
+        // Obtener categorías para mapear
+        const categorias = await localDbService.obtenerCategorias(userId)
+
+        // Headers esperados: Date, Type, Category, Description, Amount
+        // Normalizar headers para ser flexibles
+        const headers = lines[0].toLowerCase().split(',').map(h => h.trim().replace(/"/g, ''))
+
+        const idxFecha = headers.findIndex(h => h.includes('date') || h.includes('fecha'))
+        const idxTipo = headers.findIndex(h => h.includes('type') || h.includes('tipo'))
+        const idxCat = headers.findIndex(h => h.includes('category') || h.includes('categoría') || h.includes('categoria'))
+        const idxDesc = headers.findIndex(h => h.includes('description') || h.includes('descripción') || h.includes('descripcion'))
+        const idxMonto = headers.findIndex(h => h.includes('amount') || h.includes('monto') || h.includes('cantidad'))
+
+        if (idxFecha === -1 || idxMonto === -1) {
+            throw new Error('Formato CSV inválido. Se requieren al menos Fecha y Monto.')
+        }
+
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim()
+            if (!line) continue
+
+            try {
+                // Parsear línea respetando comillas (básico)
+                // Nota: Para un parsing robusto se recomienda una librería, pero esto servirá para el formato simple exportado
+                const row = []
+                let inQuotes = false
+                let currentVal = ''
+                for (let char of line) {
+                    if (char === '"') {
+                        inQuotes = !inQuotes
+                    } else if (char === ',' && !inQuotes) {
+                        row.push(currentVal)
+                        currentVal = ''
+                    } else {
+                        currentVal += char
+                    }
+                }
+                row.push(currentVal) // Último valor
+
+                const fechaStr = row[idxFecha]?.trim()
+                const montoStr = row[idxMonto]?.trim()
+                const tipoStr = idxTipo !== -1 ? row[idxTipo]?.trim().toLowerCase() : ''
+                const catNombre = idxCat !== -1 ? row[idxCat]?.trim() : ''
+                const descripcion = idxDesc !== -1 ? row[idxDesc]?.trim().replace(/"/g, '') : 'Importado CSV'
+
+                if (!fechaStr || !montoStr) continue
+
+                // Conversión de datos
+                const monto = parseFloat(montoStr)
+                if (isNaN(monto)) continue
+
+                // Determinar tipo si no está explícito (basado en signo del monto)
+                let tipo = tipoStr
+                if (!tipo) {
+                    tipo = monto >= 0 ? 'ingreso' : 'gasto'
+                }
+                // Normalizar tipo
+                if (tipo.includes('ingreso') || tipo.includes('income')) tipo = 'ingreso'
+                else if (tipo.includes('gasto') || tipo.includes('expense')) tipo = 'gasto'
+                else tipo = 'gasto' // Default
+
+                // Buscar categoría
+                let categoryId = null
+                if (catNombre) {
+                    const catObj = categorias.find(c =>
+                        c.nombre.toLowerCase() === catNombre.toLowerCase() &&
+                        c.tipo === tipo
+                    )
+                    if (catObj) categoryId = catObj.id
+                }
+
+                // Fallback categoría
+                if (!categoryId) {
+                    const catObj = categorias.find(c => c.tipo === tipo) // Cualquiera del mismo tipo
+                    if (catObj) categoryId = catObj.id
+                }
+
+                const nuevaTx = {
+                    fecha: fechaStr, // Asumimos formato compatible YYYY-MM-DD o ISO
+                    monto: Math.abs(monto), // Guardamos absoluto, el tipo define signo
+                    tipo: tipo,
+                    descripcion: descripcion,
+                    category_id: categoryId,
+                    user_id: userId
+                }
+
+                await this.crearTransaccion(nuevaTx)
+                resumen.transacciones++
+
+            } catch (e) {
+                console.warn(`Error en línea ${i + 1}:`, e)
+                resumen.errores++
+            }
+        }
+
+        return resumen
+    },
+
+    // ===========================================================
     // SINCRONIZACIÓN
     // ===========================================================
 

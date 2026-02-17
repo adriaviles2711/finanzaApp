@@ -131,15 +131,15 @@ export function renderLayout() {
       <main class="flex-1 flex flex-col overflow-hidden bg-dark-50 dark:bg-dark-950">
         
         <!-- Header superior (móvil y desktop) -->
-        <header class="flex items-center justify-between px-4 md:px-6 py-4 bg-white dark:bg-dark-900 border-b border-dark-100 dark:border-dark-800 safe-top">
+      <header class="sticky top-0 z-40 flex items-center justify-between px-4 md:px-6 py-4 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-dark-100 dark:border-dark-800 safe-top transition-all duration-300">
           <!-- Logo móvil -->
           <div class="flex items-center gap-3 md:hidden">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center shadow-md shadow-primary-500/20">
               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <span class="font-bold text-dark-900 dark:text-white">FinanzaPro</span>
+            <span class="font-bold text-dark-900 dark:text-white tracking-tight">FinanzaPro</span>
           </div>
           
           <!-- Título de página (desktop) -->
@@ -148,18 +148,18 @@ export function renderLayout() {
           </div>
           
           <!-- Acciones del header -->
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-3">
             <!-- Language selector (mobile compact) -->
-            <div class="flex md:hidden gap-0.5 bg-dark-100 dark:bg-dark-800 rounded-xl p-0.5">
+            <div class="flex md:hidden gap-1 bg-dark-100 dark:bg-dark-800 rounded-xl p-1 relative z-50">
               ${langs.map(l => `
-                <button class="lang-btn px-2 py-1 text-xs rounded-lg transition-all ${l.code === currentLang ? 'bg-white dark:bg-dark-700 shadow-sm font-bold' : 'text-dark-500'}" data-lang="${l.code}">
+                <button class="lang-btn px-2.5 py-1.5 text-sm rounded-lg transition-all active:scale-95 ${l.code === currentLang ? 'bg-white dark:bg-dark-700 shadow-sm font-bold ring-1 ring-black/5 dark:ring-white/10' : 'text-dark-500 hover:text-dark-700 dark:hover:text-dark-300'}" data-lang="${l.code}">
                   ${l.flag}
                 </button>
               `).join('')}
             </div>
 
             <!-- Botón de tema oscuro/claro -->
-            <button id="btn-toggle-theme" class="btn-icon text-dark-500 dark:text-dark-400" title="Toggle theme">
+            <button id="btn-toggle-theme" class="btn-icon text-dark-500 dark:text-dark-400 hover:bg-dark-100 dark:hover:bg-dark-800 rounded-xl transition-colors" title="Toggle theme">
               <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
@@ -175,86 +175,103 @@ export function renderLayout() {
             </div>
             
             <!-- Botón de añadir (acceso rápido) -->
-            <a href="#/nueva-transaccion" class="btn-primary py-2 px-3 md:px-4">
+            <a href="#/nueva-transaccion" class="btn-primary py-2 px-3 md:px-4 hidden md:flex items-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
-              <span class="hidden md:inline">${t('nav.newTransaction')}</span>
+              <span>${t('nav.newTransaction')}</span>
             </a>
           </div>
         </header>
         
         <!-- Contenido de la vista actual -->
-        <div id="main-content" class="page-container">
+        <div id="main-content" class="page-container relative z-0">
           <!-- El contenido será inyectado por el Router -->
         </div>
       </main>
       
       <!-- ========== BOTTOM NAVIGATION (Móvil) ========== -->
-      <nav class="bottom-nav backdrop-blur-xl bg-white/90 dark:bg-dark-900/95 border-t border-dark-200/50 dark:border-dark-700/50">
+      <nav class="bottom-nav backdrop-blur-xl bg-white/95 dark:bg-dark-900/95 border-t border-dark-200/60 dark:border-dark-700/60 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50">
         <!-- Floating Action Button -->
-        <a href="#/nueva-transaccion" class="absolute left-1/2 -translate-x-1/2 -top-7 z-10">
-          <div class="w-14 h-14 bg-gradient-to-br from-primary-500 via-primary-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-primary-500/40 border-2 border-white dark:border-dark-800 transition-transform active:scale-95 hover:scale-105">
+        <a href="#/nueva-transaccion" class="absolute left-1/2 -translate-x-1/2 -top-6 md:hidden z-50 group">
+          <div class="w-14 h-14 bg-gradient-to-br from-primary-500 via-primary-600 to-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-primary-500/40 border-[3px] border-white dark:border-dark-900 transition-transform active:scale-95 group-hover:scale-105 group-hover:shadow-primary-500/60">
             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
             </svg>
           </div>
         </a>
         
-        <div class="grid grid-cols-7 w-full h-full">
-          <!-- Dashboard -->
-          <a href="#/dashboard" class="bottom-nav-item" data-nav="dashboard">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span class="text-[10px] mt-0.5 font-medium">${t('nav.dashboard')}</span>
-          </a>
+        <div class="flex items-center justify-between w-full h-full px-2 max-w-md mx-auto relative">
           
-          <!-- Transacciones -->
-          <a href="#/transacciones" class="bottom-nav-item" data-nav="transacciones">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            <span class="text-[10px] mt-0.5 font-medium">${t('nav.transactions')}</span>
-          </a>
-          
-          <!-- Presupuestos -->
-          <a href="#/presupuestos" class="bottom-nav-item" data-nav="presupuestos">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            <span class="text-[10px] mt-0.5 font-medium">${t('nav.budgets')}</span>
-          </a>
-
-          <!-- Spacer for FAB -->
-          <div class="bottom-nav-item pointer-events-none opacity-0">
-            <svg class="w-5 h-5" viewBox="0 0 24 24"></svg>
-            <span class="text-[10px]">&nbsp;</span>
+          <!-- Grupo Izquierdo -->
+          <div class="flex items-center justify-between flex-1 gap-1 pr-6">
+            <!-- Dashboard -->
+            <a href="#/dashboard" class="bottom-nav-item flex-1 min-w-0" data-nav="dashboard">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.dashboard')}</span>
+            </a>
+            
+            <!-- Transacciones -->
+            <a href="#/transacciones" class="bottom-nav-item flex-1 min-w-0" data-nav="transacciones">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.transactions')}</span>
+            </a>
+            
+            <!-- Presupuestos -->
+            <a href="#/presupuestos" class="bottom-nav-item flex-1 min-w-0" data-nav="presupuestos">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.budgets')}</span>
+            </a>
           </div>
 
-          <!-- Metas -->
-          <a href="#/metas" class="bottom-nav-item" data-nav="metas">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-            <span class="text-[10px] mt-0.5 font-medium">${t('nav.goals')}</span>
-          </a>
-          
-          <!-- Informes -->
-          <a href="#/informes" class="bottom-nav-item" data-nav="informes">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span class="text-[10px] mt-0.5 font-medium">${t('nav.reports')}</span>
-          </a>
-          
-          <!-- Perfil -->
-          <a href="#/perfil" class="bottom-nav-item" data-nav="perfil">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span class="text-[10px] mt-0.5 font-medium">${t('nav.profile')}</span>
-          </a>
+          <!-- Espaciador Central (para FAB) -->
+          <div class="w-12 shrink-0"></div>
+
+          <!-- Grupo Derecho -->
+          <div class="flex items-center justify-between flex-1 gap-1 pl-6">
+            <!-- Metas -->
+            <a href="#/metas" class="bottom-nav-item flex-1 min-w-0" data-nav="metas">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.goals')}</span>
+            </a>
+            
+            <!-- Informes -->
+            <a href="#/informes" class="bottom-nav-item flex-1 min-w-0" data-nav="informes">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.reports')}</span>
+            </a>
+            
+            <!-- Perfil -->
+            <a href="#/perfil" class="bottom-nav-item flex-1 min-w-0" data-nav="perfil">
+              <div class="nav-icon-container p-1 rounded-xl transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.profile')}</span>
+            </a>
+          </div>
+
         </div>
       </nav>
     </div>

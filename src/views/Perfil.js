@@ -200,6 +200,25 @@ export async function PerfilView() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
+
+          <!-- Importar datos -->
+          <button id="btn-importar" class="flex items-center justify-between w-full p-4 bg-dark-50/80 dark:bg-dark-800/50 rounded-2xl hover:bg-dark-100/80 dark:hover:bg-dark-700/50 transition-all duration-200 group">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-md shadow-indigo-500/20">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="font-semibold text-dark-900 dark:text-white">${t('profile.importData') || 'Importar datos'}</p>
+                <p class="text-sm text-dark-500 dark:text-dark-400">${t('profile.importDesc') || 'Restaurar copia de seguridad (JSON)'}</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-dark-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            <input type="file" id="file-import-json" accept=".json" class="hidden" />
+          </button>
           
           <!-- Sincronizar -->
           <button id="btn-sincronizar" class="flex items-center justify-between w-full p-4 bg-dark-50/80 dark:bg-dark-800/50 rounded-2xl hover:bg-dark-100/80 dark:hover:bg-dark-700/50 transition-all duration-200 group">
@@ -341,6 +360,39 @@ export function initPerfilEvents() {
       console.error('Error exportando:', error)
       window.showToast?.(t('profile.exportError'), 'error')
     }
+  })
+
+  // Importar datos
+  document.getElementById('btn-importar')?.addEventListener('click', () => {
+    document.getElementById('file-import-json')?.click()
+  })
+
+  document.getElementById('file-import-json')?.addEventListener('change', async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    if (confirm('¿Seguro que quieres restaurar los datos? Se fusionarán con los actuales.')) {
+      const reader = new FileReader()
+      reader.onload = async (event) => {
+        try {
+          const jsonData = JSON.parse(event.target.result)
+          window.showToast?.('Importando datos...', 'info')
+
+          const resumen = await dataManager.importarDatosJson(jsonData)
+
+          window.showToast?.(`Importación completada: ${resumen.transacciones} transacciones, ${resumen.categorias} categorías.`, 'success')
+
+          // Reload after short delay
+          setTimeout(() => window.location.reload(), 2000)
+        } catch (error) {
+          console.error('Error importando:', error)
+          window.showToast?.('Error al importar archivo', 'error')
+        }
+      }
+      reader.readAsText(file)
+    }
+    // Reset input
+    e.target.value = ''
   })
 
   // Sincronizar

@@ -35,6 +35,12 @@ export async function TransaccionesView() {
           </svg>
           Nueva transacción
         </a>
+        <button id="btn-importar-csv" class="btn-secondary ml-2" title="Importar CSV">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+        </button>
+        <input type="file" id="file-import-csv" accept=".csv" class="hidden" />
       </div>
       
       <!-- Filtros -->
@@ -235,7 +241,40 @@ export function initTransaccionesEvents() {
   filtroCategoria?.addEventListener('change', aplicarFiltros)
   filtroMes?.addEventListener('change', aplicarFiltros)
   buscar?.addEventListener('input', aplicarFiltros)
-}
 
+  // Importar CSV
+  document.getElementById('btn-importar-csv')?.addEventListener('click', () => {
+    document.getElementById('file-import-csv')?.click()
+  })
+
+  document.getElementById('file-import-csv')?.addEventListener('change', async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    if (confirm('¿Importar transacciones desde este archivo CSV?')) {
+      const reader = new FileReader()
+      reader.onload = async (event) => {
+        try {
+          const csvText = event.target.result
+          window.showToast?.('Importando transacciones...', 'info')
+
+          const resumen = await dataManager.importarTransaccionesCSV(csvText)
+
+          if (resumen.transacciones > 0) {
+            window.showToast?.(`¡Éxito! ${resumen.transacciones} transacciones importadas.`, 'success')
+            setTimeout(() => window.location.reload(), 1500)
+          } else {
+            window.showToast?.('No se pudieron importar transacciones. Revisa el formato.', 'warning')
+          }
+        } catch (error) {
+          console.error('Error importando CSV:', error)
+          window.showToast?.('Error al procesar el archivo CSV', 'error')
+        }
+      }
+      reader.readAsText(file)
+    }
+    e.target.value = ''
+  })
+}
 
 export default TransaccionesView
