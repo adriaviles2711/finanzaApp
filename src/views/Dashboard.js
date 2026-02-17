@@ -73,7 +73,7 @@ export async function DashboardView() {
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
-          Nueva Transacción
+          ${t('nav.newTransaction')}
         </a>
       </div>
       
@@ -87,9 +87,9 @@ export async function DashboardView() {
         
         <div class="relative z-10">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-primary-100 text-sm font-medium">Balance del mes</span>
+            <span class="text-primary-100 text-sm font-medium">${t('dashboard.summary.balanceMonth')}</span>
             <span class="badge ${tendencia === 'positiva' ? 'bg-white/20 text-white' : 'bg-danger-500/30 text-danger-100'}">
-              ${tendencia === 'positiva' ? '↗ Positivo' : '↘ Negativo'}
+              ${tendencia === 'positiva' ? '↗ ' + t('dashboard.positive') : '↘ ' + t('dashboard.negative')}
             </span>
           </div>
           <h2 class="text-4xl md:text-5xl font-bold text-white mb-1 tracking-tight">
@@ -106,7 +106,7 @@ export async function DashboardView() {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
                   </svg>
                 </div>
-                <span class="text-primary-100 text-sm">Ingresos</span>
+                <span class="text-primary-100 text-sm">${t('dashboard.summary.income')}</span>
               </div>
               <p class="text-xl md:text-2xl font-bold text-white">+${formatearMoneda(resumen.ingresos)}</p>
             </div>
@@ -117,7 +117,7 @@ export async function DashboardView() {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
                   </svg>
                 </div>
-                <span class="text-primary-100 text-sm">Gastos</span>
+                <span class="text-primary-100 text-sm">${t('dashboard.summary.expenses')}</span>
               </div>
               <p class="text-xl md:text-2xl font-bold text-white">-${formatearMoneda(resumen.gastos)}</p>
             </div>
@@ -133,7 +133,7 @@ export async function DashboardView() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
             </svg>
           </div>
-          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">Gasto</span>
+          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">${t('dashboard.quickActions.expense')}</span>
         </a>
         <a href="#/nueva-transaccion?tipo=ingreso" class="quick-action group">
           <div class="quick-action-icon bg-success-100 dark:bg-success-900/30">
@@ -141,7 +141,7 @@ export async function DashboardView() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
           </div>
-          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">Ingreso</span>
+          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">${t('dashboard.quickActions.income')}</span>
         </a>
         <a href="#/presupuestos" class="quick-action group">
           <div class="quick-action-icon bg-primary-100 dark:bg-primary-900/30">
@@ -149,7 +149,7 @@ export async function DashboardView() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">Presupuesto</span>
+          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">${t('dashboard.quickActions.budget')}</span>
         </a>
         <a href="#/categorias" class="quick-action group">
           <div class="quick-action-icon bg-warning-100 dark:bg-warning-900/30">
@@ -157,7 +157,7 @@ export async function DashboardView() {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
           </div>
-          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">Categorías</span>
+          <span class="text-xs md:text-sm font-medium text-dark-600 dark:text-dark-300 text-center">${t('dashboard.quickActions.categories')}</span>
         </a>
       </div>
       
@@ -167,8 +167,8 @@ export async function DashboardView() {
         <!-- Gastos por categoría -->
         <div class="card">
           <div class="flex items-center justify-between mb-6">
-            <h3 class="font-bold text-dark-900 dark:text-white">Gastos por categoría</h3>
-            <span class="text-sm text-dark-500 dark:text-dark-400">Este mes</span>
+            <h3 class="font-bold text-dark-900 dark:text-white">${t('dashboard.charts.expensesByCategory')}</h3>
+            <span class="text-sm text-dark-500 dark:text-dark-400">${t('dashboard.charts.thisMonth')}</span>
           </div>
           
           ${topCategorias.length > 0 ? `
@@ -200,7 +200,7 @@ export async function DashboardView() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <p class="text-dark-500 dark:text-dark-400">No hay gastos este mes</p>
+              <p class="text-dark-500 dark:text-dark-400">${t('dashboard.charts.noExpenses')}</p>
             </div>
           `}
         </div>
@@ -208,9 +208,9 @@ export async function DashboardView() {
         <!-- Transacciones recientes -->
         <div class="card">
           <div class="flex items-center justify-between mb-6">
-            <h3 class="font-bold text-dark-900 dark:text-white">Últimas transacciones</h3>
+            <h3 class="font-bold text-dark-900 dark:text-white">${t('dashboard.charts.recentTransactions')}</h3>
             <a href="#/transacciones" class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 font-medium">
-              Ver todas →
+              ${t('dashboard.charts.viewAll')} →
             </a>
           </div>
           
@@ -225,7 +225,7 @@ export async function DashboardView() {
                       ${categoria?.icono || '💰'}
                     </div>
                     <div class="flex-1 min-w-0">
-                      <p class="font-medium text-dark-900 dark:text-white truncate">${t.descripcion || categoria?.nombre || 'Transacción'}</p>
+                      <p class="font-medium text-dark-900 dark:text-white truncate">${t.descripcion || categoria?.nombre || t('dashboard.charts.transaction')}</p>
                       <p class="text-sm text-dark-500 dark:text-dark-400">${formatearFecha(t.fecha)}</p>
                     </div>
                     <span class="font-bold ${esIngreso ? 'text-success-600 dark:text-success-400' : 'text-dark-900 dark:text-white'}">
@@ -242,9 +242,9 @@ export async function DashboardView() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <p class="text-dark-500 dark:text-dark-400 mb-4">No hay transacciones aún</p>
+              <p class="text-dark-500 dark:text-dark-400 mb-4">${t('dashboard.charts.noTransactions')}</p>
               <a href="#/nueva-transaccion" class="btn-primary">
-                Agregar primera transacción
+                ${t('dashboard.charts.addFirst')}
               </a>
             </div>
           `}
@@ -263,7 +263,7 @@ export async function DashboardView() {
             </div>
           </div>
           <p class="text-2xl font-bold text-dark-900 dark:text-white">${resumen.totalTransacciones || 0}</p>
-          <p class="text-sm text-dark-500 dark:text-dark-400">Transacciones</p>
+          <p class="text-sm text-dark-500 dark:text-dark-400">${t('dashboard.stats.transactions')}</p>
         </div>
         
         <div class="stat-card">
@@ -277,7 +277,7 @@ export async function DashboardView() {
           <p class="text-2xl font-bold text-success-600 dark:text-success-400">
             ${resumen.ingresos > 0 ? Math.round((resumen.ingresos / (resumen.ingresos + resumen.gastos || 1)) * 100) : 0}%
           </p>
-          <p class="text-sm text-dark-500 dark:text-dark-400">Tasa ahorro</p>
+          <p class="text-sm text-dark-500 dark:text-dark-400">${t('dashboard.stats.savingsRate')}</p>
         </div>
         
         <div class="stat-card">
@@ -289,7 +289,7 @@ export async function DashboardView() {
             </div>
           </div>
           <p class="text-2xl font-bold text-dark-900 dark:text-white">${categorias.length}</p>
-          <p class="text-sm text-dark-500 dark:text-dark-400">Categorías</p>
+          <p class="text-sm text-dark-500 dark:text-dark-400">${t('dashboard.stats.categories')}</p>
         </div>
         
         <div class="stat-card">
@@ -303,7 +303,7 @@ export async function DashboardView() {
           <p class="text-2xl font-bold text-dark-900 dark:text-white">
             ${resumen.gastos > 0 ? formatearMoneda(resumen.gastos / (transaccionesMes.length || 1)) : formatearMoneda(0)}
           </p>
-          <p class="text-sm text-dark-500 dark:text-dark-400">Gasto promedio</p>
+          <p class="text-sm text-dark-500 dark:text-dark-400">${t('dashboard.stats.avgExpense')}</p>
         </div>
       </div>
       

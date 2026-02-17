@@ -29,6 +29,8 @@ const translations = {
             logoutDesc: 'Se cerrará tu sesión actual.',
             cancel: 'Cancelar',
             confirm: 'Confirmar',
+            more: 'Más',
+            menu: 'Menú',
         },
         // ---- Common ----
         common: {
@@ -126,6 +128,33 @@ const translations = {
             newTransaction: 'Nueva Transacción',
             insight: 'Insight Financiero',
             financialTip: 'Consejo Financiero',
+            summary: {
+                balanceMonth: 'Balance del mes',
+                income: 'Ingresos',
+                expenses: 'Gastos',
+            },
+            stats: {
+                transactions: 'Transacciones',
+                savingsRate: 'Tasa ahorro',
+                categories: 'Categorías',
+                avgExpense: 'Gasto promedio',
+            },
+            charts: {
+                expensesByCategory: 'Gastos por categoría',
+                thisMonth: 'Este mes',
+                recentTransactions: 'Últimas transacciones',
+                viewAll: 'Ver todas',
+                noExpenses: 'No hay gastos este mes',
+                noTransactions: 'No hay transacciones aún',
+                addFirst: 'Agregar primera transacción',
+                transaction: 'Transacción',
+            },
+            quickActions: {
+                expense: 'Gasto',
+                income: 'Ingreso',
+                budget: 'Presupuesto',
+                categories: 'Categorías',
+            },
         },
         // ---- Transactions ----
         transactions: {
@@ -380,6 +409,8 @@ const translations = {
             logoutDesc: 'Your current session will be closed.',
             cancel: 'Cancel',
             confirm: 'Confirm',
+            more: 'More',
+            menu: 'Menu',
         },
         common: {
             save: 'Save',
@@ -474,6 +505,33 @@ const translations = {
             newTransaction: 'New Transaction',
             insight: 'Financial Insight',
             financialTip: 'Financial Tip',
+            summary: {
+                balanceMonth: 'Monthly Balance',
+                income: 'Income',
+                expenses: 'Expenses',
+            },
+            stats: {
+                transactions: 'Transactions',
+                savingsRate: 'Savings rate',
+                categories: 'Categories',
+                avgExpense: 'Avg. Expense',
+            },
+            charts: {
+                expensesByCategory: 'Expenses by category',
+                thisMonth: 'This month',
+                recentTransactions: 'Recent transactions',
+                viewAll: 'View all',
+                noExpenses: 'No expenses this month',
+                noTransactions: 'No transactions yet',
+                addFirst: 'Add first transaction',
+                transaction: 'Transaction',
+            },
+            quickActions: {
+                expense: 'Expense',
+                income: 'Income',
+                budget: 'Budget',
+                categories: 'Categories',
+            },
         },
         transactions: {
             title: 'Transactions',
@@ -717,6 +775,8 @@ const translations = {
             logoutDesc: 'Sua sessão atual será encerrada.',
             cancel: 'Cancelar',
             confirm: 'Confirmar',
+            more: 'Mais',
+            menu: 'Menu',
         },
         common: {
             save: 'Salvar',
@@ -811,6 +871,33 @@ const translations = {
             newTransaction: 'Nova Transação',
             insight: 'Insight Financeiro',
             financialTip: 'Dica Financeira',
+            summary: {
+                balanceMonth: 'Saldo mensal',
+                income: 'Receitas',
+                expenses: 'Despesas',
+            },
+            stats: {
+                transactions: 'Transações',
+                savingsRate: 'Taxa de economia',
+                categories: 'Categorias',
+                avgExpense: 'Despesa média',
+            },
+            charts: {
+                expensesByCategory: 'Despesas por categoria',
+                thisMonth: 'Este mês',
+                recentTransactions: 'Transações recentes',
+                viewAll: 'Ver todas',
+                noExpenses: 'Sem despesas este mês',
+                noTransactions: 'Nenhuma transação ainda',
+                addFirst: 'Adicionar primeira transação',
+                transaction: 'Transação',
+            },
+            quickActions: {
+                expense: 'Despesa',
+                income: 'Receita',
+                budget: 'Orçamento',
+                categories: 'Categorias',
+            },
         },
         transactions: {
             title: 'Transações',

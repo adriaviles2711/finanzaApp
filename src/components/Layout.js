@@ -208,33 +208,23 @@ export function renderLayout() {
           <!-- Grupo Izquierdo -->
           <div class="flex items-center justify-between flex-1 gap-1 pr-6">
             <!-- Dashboard -->
-            <a href="#/dashboard" class="bottom-nav-item flex-1 min-w-0" data-nav="dashboard">
+            <a href="#/dashboard" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="dashboard">
               <div class="nav-icon-container p-1 rounded-xl transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.dashboardShort')}</span>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.dashboardShort')}</span>
             </a>
             
             <!-- Transacciones -->
-            <a href="#/transacciones" class="bottom-nav-item flex-1 min-w-0" data-nav="transacciones">
+            <a href="#/transacciones" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="transacciones">
               <div class="nav-icon-container p-1 rounded-xl transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.transactionsShort')}</span>
-            </a>
-            
-            <!-- Presupuestos -->
-            <a href="#/presupuestos" class="bottom-nav-item flex-1 min-w-0" data-nav="presupuestos">
-              <div class="nav-icon-container p-1 rounded-xl transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.budgetsShort')}</span>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.transactionsShort')}</span>
             </a>
           </div>
 
@@ -243,39 +233,74 @@ export function renderLayout() {
 
           <!-- Grupo Derecho -->
           <div class="flex items-center justify-between flex-1 gap-1 pl-6">
-            <!-- Metas -->
-            <a href="#/metas" class="bottom-nav-item flex-1 min-w-0" data-nav="metas">
+            <!-- Presupuestos -->
+            <a href="#/presupuestos" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2" data-nav="presupuestos">
               <div class="nav-icon-container p-1 rounded-xl transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.goalsShort')}</span>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.budgetsShort')}</span>
             </a>
             
-            <!-- Informes -->
-            <a href="#/informes" class="bottom-nav-item flex-1 min-w-0" data-nav="informes">
+            <!-- More Menu Trigger -->
+            <button id="btn-more-menu" class="bottom-nav-item flex-1 min-w-0 flex flex-col items-center justify-center py-2">
               <div class="nav-icon-container p-1 rounded-xl transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.reportsShort')}</span>
-            </a>
-            
-            <!-- Perfil -->
-            <a href="#/perfil" class="bottom-nav-item flex-1 min-w-0" data-nav="perfil">
-              <div class="nav-icon-container p-1 rounded-xl transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.profileShort')}</span>
-            </a>
+              <span class="text-[10px] font-medium leading-none opacity-70 bottom-nav-label">${t('nav.more')}</span>
+            </button>
           </div>
 
         </div>
       </nav>
+
+      <!-- More Menu Overlay -->
+      <div id="more-menu-overlay" class="fixed inset-0 bg-dark-900/50 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+      
+      <!-- More Menu Drawer -->
+      <div id="more-menu-drawer" class="fixed bottom-[80px] right-4 w-48 bg-white dark:bg-dark-800 rounded-2xl shadow-2xl border border-dark-100 dark:border-dark-700 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex flex-col overflow-hidden">
+        
+        <a href="#/metas" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="metas">
+          <div class="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.goals')}</span>
+        </a>
+
+        <a href="#/categorias" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="categorias">
+          <div class="p-1.5 rounded-lg bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.categories')}</span>
+        </a>
+
+        <a href="#/informes" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="informes">
+           <div class="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.reports')}</span>
+        </a>
+
+        <div class="h-px bg-dark-100 dark:bg-dark-700 my-1"></div>
+
+        <a href="#/perfil" class="flex items-center gap-3 px-4 py-3 hover:bg-dark-50 dark:hover:bg-dark-700/50 transition-colors" data-nav="perfil">
+          <div class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <span class="font-medium text-sm text-dark-700 dark:text-dark-200">${t('nav.profile')}</span>
+        </a>
+      </div>
     </div>
   `
 }
@@ -298,7 +323,7 @@ export function updateActiveNav(path) {
 
   const activeNav = routeToNav[path] || 'dashboard'
 
-  // Actualizar sidebar (desktop)
+  // Actualizar top nav (desktop)
   document.querySelectorAll('.sidebar .nav-item').forEach(item => {
     item.classList.remove('nav-item-active')
   })
@@ -308,14 +333,42 @@ export function updateActiveNav(path) {
     activeDesktop.classList.add('nav-item-active')
   }
 
-  // Actualizar bottom nav (móvil)
+  // Actualizar bottom nav (móvil) - Primary items
   document.querySelectorAll('.bottom-nav .bottom-nav-item').forEach(item => {
-    item.classList.remove('bottom-nav-item-active')
+    item.classList.remove('bottom-nav-item-active', 'text-primary-600', 'dark:text-primary-400')
+    item.classList.add('text-dark-400', 'dark:text-dark-500')
+
+    // Reset icon container bg
+    const iconContainer = item.querySelector('.nav-icon-container')
+    if (iconContainer) {
+      iconContainer.classList.remove('bg-primary-50', 'dark:bg-primary-900/20', 'text-primary-600', 'dark:text-primary-400')
+    }
   })
 
-  const activeMobile = document.querySelector(`.bottom-nav [data-nav="${activeNav}"]`)
+  // Check if it's a primary item (dashboard, transacciones, presupuestos)
+  const isPrimary = ['dashboard', 'transacciones', 'presupuestos'].includes(activeNav)
+  let activeMobile
+
+  if (isPrimary) {
+    activeMobile = document.querySelector(`.bottom-nav [data-nav="${activeNav}"]`)
+  } else {
+    // If it's a secondary item (metas, categorias, informes, perfil), highlight "More"
+    activeMobile = document.getElementById('btn-more-menu')
+  }
+
   if (activeMobile) {
-    activeMobile.classList.add('bottom-nav-item-active')
+    activeMobile.classList.add('bottom-nav-item-active', 'text-primary-600', 'dark:text-primary-400')
+    activeMobile.classList.remove('text-dark-400', 'dark:text-dark-500')
+
+    const iconContainer = activeMobile.querySelector('.nav-icon-container')
+    if (iconContainer) {
+      iconContainer.classList.add('bg-primary-50', 'dark:bg-primary-900/20', 'text-primary-600', 'dark:text-primary-400')
+    }
+
+    const label = activeMobile.querySelector('.bottom-nav-label')
+    if (label) {
+      label.classList.remove('opacity-70')
+    }
   }
 
   // Actualizar título de página en header
@@ -387,7 +440,47 @@ export function initLayoutEvents() {
   // Inicializar estado de conexión y tema
   initConnectionStatus()
   initTheme()
+  initMoreMenu()
 }
+
+/**
+ * Inicializar menú "More" para móvil
+ */
+function initMoreMenu() {
+  const btnMore = document.getElementById('btn-more-menu')
+  const overlay = document.getElementById('more-menu-overlay')
+  const drawer = document.getElementById('more-menu-drawer')
+  const drawerLinks = drawer ? drawer.querySelectorAll('a') : []
+
+  if (!btnMore || !overlay || !drawer) return
+
+  const toggleMenu = () => {
+    const isOpen = !drawer.classList.contains('pointer-events-none')
+
+    if (isOpen) {
+      // Close
+      overlay.classList.add('opacity-0')
+      overlay.classList.add('hidden')
+      drawer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-20')
+    } else {
+      // Open
+      overlay.classList.remove('hidden')
+      // force reflow
+      void overlay.offsetWidth
+      overlay.classList.remove('opacity-0')
+      drawer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-20')
+    }
+  }
+
+  btnMore.addEventListener('click', toggleMenu)
+  overlay.addEventListener('click', toggleMenu)
+
+  // Close on link click
+  drawerLinks.forEach(link => {
+    link.addEventListener('click', toggleMenu)
+  })
+}
+
 
 /**
  * Mostrar modal de confirmación de logout premium
