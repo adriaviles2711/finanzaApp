@@ -59,6 +59,10 @@ async function initApp() {
 
     console.log('🚀 Iniciando FinanzaPro...')
 
+    // Inicializar i18n
+    initI18n()
+
+
     const appContainer = document.getElementById('app')
     const loadingScreen = document.getElementById('loading-screen')
 

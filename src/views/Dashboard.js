@@ -7,6 +7,7 @@
 
 import { dataManager } from '../services/dataManager.js'
 import { formatearMoneda, formatearFecha, obtenerSaludo, obtenerMes, agruparPor } from '../utils/helpers.js'
+import { t } from '../utils/i18n.js'
 /**
  * Renderizar vista de Dashboard
  * @returns {Promise<string>} HTML de la vista
