@@ -1086,7 +1086,7 @@ export function t(key, params = {}) {
  * Change current language
  * @param {string} langCode - 'es', 'en', 'pt'
  */
-export function setLanguage(langCode) {
+export function setLang(langCode) {
     if (translations[langCode]) {
         currentLang = langCode
         localStorage.setItem('finanza_lang', langCode)
