@@ -153,7 +153,9 @@ export function renderLayout() {
             <div class="flex md:hidden gap-1 bg-dark-100 dark:bg-dark-800 rounded-xl p-1 relative z-50">
               ${langs.map(l => `
                 <button class="lang-btn px-2.5 py-1.5 text-sm rounded-lg transition-all active:scale-95 ${l.code === currentLang ? 'bg-white dark:bg-dark-700 shadow-sm font-bold ring-1 ring-black/5 dark:ring-white/10' : 'text-dark-500 hover:text-dark-700 dark:hover:text-dark-300'}" data-lang="${l.code}">
-                  ${l.flag}
+                  <div class="w-5 h-3.5 flex items-center justify-center overflow-hidden rounded-[2px] shadow-sm transform transition-transform group-hover:scale-110">
+                    ${l.flag}
+                  </div>
                 </button>
               `).join('')}
             </div>
@@ -212,7 +214,7 @@ export function renderLayout() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.dashboard')}</span>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.dashboardShort')}</span>
             </a>
             
             <!-- Transacciones -->
@@ -222,7 +224,7 @@ export function renderLayout() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.transactions')}</span>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.transactionsShort')}</span>
             </a>
             
             <!-- Presupuestos -->
@@ -232,7 +234,7 @@ export function renderLayout() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.budgets')}</span>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.budgetsShort')}</span>
             </a>
           </div>
 
@@ -248,7 +250,7 @@ export function renderLayout() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.goals')}</span>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.goalsShort')}</span>
             </a>
             
             <!-- Informes -->
@@ -258,7 +260,7 @@ export function renderLayout() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.reports')}</span>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.reportsShort')}</span>
             </a>
             
             <!-- Perfil -->
@@ -268,7 +270,7 @@ export function renderLayout() {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.profile')}</span>
+              <span class="text-[10px] font-medium truncate w-full text-center leading-tight transition-opacity">${t('nav.profileShort')}</span>
             </a>
           </div>
 
